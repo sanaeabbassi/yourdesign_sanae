@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Design</title>
+  <link rel="icon" type="image/png" href="assets/logo-removebg-preview.png">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background: linear-gradient(to bottom, #CCD1DE, #d492d3);
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(to right, #f7c2d0, white);
+      padding: 20px;
+      text-align: center;
+      border-bottom: 2px solid #ddd;
+      position: relative;
+    }
+
+    header img.logo {
+      width: 150px;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+
+    h1 {
+      font-size: 40px;
+      color: #c2185b;
+      font-family: 'Bradley Hand ITC', cursive;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-shadow: 1px 1px 2px rgb(200, 64, 64);
+      margin: 0;
+    }
+
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      background-color: #c2185b;
+      padding: 10px 15px;
+      border-radius: 20px;
+    }
+
+    #panier-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #e91e63;
+      border: none;
+      color: white;
+      border-radius: 20px;
+      padding: 10px 15px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #panier-toggle:hover {
+      background-color: #c2185b;
+    }
+
+    #panier-content {
+      display: none;
+      position: absolute;
+      right: 20px;
+      top: 60px;
+      background: white;
+      color: #000;
+      padding: 15px;
+      border-radius: 10px;
+      width: 300px;
+      max-height: 300px;
+      overflow-y: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      z-index: 999;
+    }
+
+    .section {
+      padding: 30px;
+      text-align: center;
+    }
+
+    .product-img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      margin: 15px;
+      cursor: pointer;
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .product-card {
+      background: #f8f9fa;
+      margin: 15px;
+      padding: 10px;
+      border-radius: 20px;
+      width: 200px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
+    .price {
+      color: #b88a0e;
+      font-weight: bold;
+    }
+
+    textarea, input[type="text"], input[type="submit"] {
+      width: 80%;
+      margin: 10px auto;
+      display: block;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .comment {
+      background-color: #ffffffdd;
+      margin: 15px auto;
+      padding: 15px;
+      width: 80%;
+      border-radius: 12px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+      text-align: left;
+    }
+
+    footer {
+      text-align: center;
+      color: white;
+      padding: 20px;
+      background-color: #8b5b83;
+      margin-top: 30px;
+      position: relative;
+    }
+
+    footer img.logo {
+      width: 80px;
+      display: block;
+      margin: 10px auto 0;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .close {
+      float: right;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="assets/logo-removebg-preview.png" alt="Logo Your Design" class="logo">
+    <h1>Your Design</h1>
+    <nav>
+      <a href="#produits">Bijoux</a>
+      <a href="#phrases">Phrases d'Amour</a>
+      <a href="#commentaires">Commentaires</a>
+      <a href="#achat">Acheter</a>
+    </nav>
+    <button id="panier-toggle">🛒 <span id="panier-count">Panier (0)</span></button>
+    <div id="panier-content"></div>
+  </header>
+
+  <section class="section" id="produits">
+    <h2>nos accessoires et votre design</h2>
+    <div class="products">
+      <!-- Produit exemple -->
+      <div class="product-card" onclick="ouvrirModal('bracelet Élégante', '120 DH', this)">
+        <img src="assets/images (9).jpg" alt="bracelet Or" class="product-img">
+        <p>bracelet personnalisé</p>
+        <p class="price">120 DH</p>
+      </div>
+      <div class="product-card" onclick="ouvrirModal('bracelet Élégante', '150 DH', this)">
+        <img src="assets/images (10).jpg" alt="bracelet Or" class="product-img">
+        <p>bracelet personnalisé</p>
+        <p class="price">150 DH</p>
+      </div>
+      <div class="product-card" onclick="ouvrirModal('pendentif Élégante', '150 DH', this)">
+        <img src="assets/images (11).jpg" alt="pendentif argent" class="product-img">
+        <p>pendentif personnalisé </p>
+        <p class="price">130 DH</p>
+      </div>
+      <div class="product-card" onclick="ouvrirModal('Bague Élégante', '150 DH', this)">
+        <img src="assets/live-your-dream-argente-r02109-3.jpg" alt="Bague argent" class="product-img">
+        <p>Bague personnalisé</p>
+        <p class="price">140 DH</p>
+      </div>
+      <div class="product-card" onclick="ouvrirModal('boucle doreille Élégante', '150 DH', this)">
+        <img src="assets/images (12).jpg" alt="boucle doreille argent" class="product-img">
+        <p>boucle doreille personnalisé</p>
+        <p class="price">140 DH</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="phrases">
+    <h2>expressions d'Amour et propositions</h2>
+    <p><strong>"Ton sourire est mon plus beau bijou."</strong></p>
+    <p><strong>"Amina 💖 Samir"</strong> – Design personnalisé</p>
+    <p><strong>"Pour toi, mon cœur brille comme l'or."</strong></p>
+  </section>
+
+  <section class="section" id="commentaires">
+    <h2>Laissez un commentaire</h2>
+    <textarea id="commentInput" placeholder="Votre avis..."></textarea>
+    <input type="text" id="usernameInput" placeholder="Votre nom">
+    <input type="submit" value="Envoyer" onclick="ajouterCommentaire()">
+    <div id="listeCommentaires"></div>
+  </section>
+  <section class="section" id="achat">
+    <h2>Informations pour l'Achat</h2>
+    <form id="achatForm" onsubmit="return false;">
+      <input type="text" id="achatNom" placeholder="Nom complet" required>
+      <input type="text" id="achatAdresse" placeholder="Adresse de livraison" required>
+      <input type="text" id="achatPays" placeholder="Pays" required>
+      <input type="text" id="achatTelephone" placeholder="Numéro de téléphone" required>
+      <div id="paypal-button-container" style="margin-top: 20px; margin-left: 300px; "></div>
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2025 Your Design - Tous droits réservés.</p>
+    <img src="assets/logo-removebg-preview.png" alt="Logo footer" class="logo">
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="fermerModal()">&times;</span>
+      <h3>Personnaliser votre bijou</h3>
+      <input type="text" id="clientNom" placeholder="Votre nom complet">
+      <input type="text" id="clientAdresse" placeholder="Adresse de livraison">
+      <input type="text" id="designNom" placeholder="Nom à graver">
+      <input type="submit" value="Ajouter au panier" onclick="ajouterAuPanier()">
+    </div>
+  </div>
+
+  <script>
+    const commentaires = [
+      {
+        nom: "Lina M.",
+        texte: "J’ai commandé un bracelet pour ma sœur, elle a adoré ! 💖",
+        date: "2025-04-10",
+        avatar: "https://i.pravatar.cc/50?img=32"
+      },
+      {
+        nom: "Karim B.",
+        texte: "Super service et bijoux de qualité, merci !",
+        date: "2025-04-09",
+        avatar: "https://i.pravatar.cc/50?img=12"
+      }
+    ];
+
+    let produitEnCours = null;
+    let panier = [];
+
+    function ajouterCommentaire() {
+      const texte = document.getElementById('commentInput').value.trim();
+      const nom = document.getElementById('usernameInput').value.trim();
+      if (texte && nom) {
+        const nouveau = {
+          nom: nom,
+          texte: texte,
+          date: new Date().toISOString().split('T')[0],
+          avatar: `https://i.pravatar.cc/50?u=${Math.random()}`
+        };
+        commentaires.unshift(nouveau);
+        afficherCommentaires();
+        document.getElementById('commentInput').value = "";
+        document.getElementById('usernameInput').value = "";
+      }
+    }
+
+    function afficherCommentaires() {
+      const container = document.getElementById('listeCommentaires');
+      container.innerHTML = "";
+      commentaires.forEach(c => {
+        container.innerHTML += `
+          <div class="comment">
+            <div style="display: flex; align-items: center;">
+              <img src="${c.avatar}" alt="avatar" style="width:40px;height:40px;border-radius:50%;margin-right:10px;">
+              <div><strong>${c.nom}</strong><br><small>${c.date}</small></div>
+            </div>
+            <p style="margin-top:10px;">${c.texte}</p>
+          </div>`;
+      });
+    }
+
+    afficherCommentaires();
+
+    function ouvrirModal(nom, prix, element) {
+      produitEnCours = {
+        nom,
+        prix,
+        image: element.querySelector("img").src
+      };
+      document.getElementById("modal").style.display = "block";
+    }
+
+    function fermerModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    function ajouterAuPanier() {
+      const clientNom = document.getElementById("clientNom").value;
+      const adresse = document.getElementById("clientAdresse").value;
+      const nomGrave = document.getElementById("designNom").value;
+      if (clientNom && adresse) {
+        panier.push({ ...produitEnCours, clientNom, adresse, nomGrave });
+        fermerModal();
+        majPanier();
+      } else {
+        alert("Veuillez remplir les informations.");
+      }
+    }
+
+    function majPanier() {
+      const panierContent = document.getElementById("panier-content");
+      document.getElementById("panier-count").innerText = `Panier (${panier.length})`;
+      panierContent.innerHTML = panier.map(item => `
+        <div style="border-bottom:1px solid #ccc; padding:10px;">
+          <img src="${item.image}" style="width:40px;height:40px;border-radius:50%;vertical-align:middle;margin-right:10px;">
+          <strong>${item.nom}</strong><br>
+          <small>${item.prix}</small><br>
+          <small>${item.nomGrave}</small>
+        </div>
+      `).join('');
+    }
+
+    document.getElementById("panier-toggle").addEventListener("click", () => {
+      const panierContent = document.getElementById("panier-content");
+      panierContent.style.display = panierContent.style.display === "block" ? "none" : "block";
+    });
+  </script>
+  <!-- PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
+
+<script>
+  paypal.Buttons({
+    createOrder: function(data, actions) {
+      const nom = document.getElementById("achatNom").value;
+      const adresse = document.getElementById("achatAdresse").value;
+      const pays = document.getElementById("achatPays").value;
+      const telephone = document.getElementById("achatTelephone").value;
+
+      if (!nom || !adresse || !pays || !telephone) {
+        alert("Veuillez remplir toutes les informations avant de payer.");
+        return;
+      }
+
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: '10.00' // Remplace ce montant selon le total du panier
+          },
+          description: "Commande Your Design"
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      return actions.order.capture().then(function(details) {
+        alert('Merci ' + details.payer.name.given_name + ', votre commande a été confirmée !');
+        // Ici, tu peux aussi envoyer les infos au serveur si tu en as un
+        document.getElementById("achatForm").reset();
+      });
+    }
+  }).render('#paypal-button-container');
+</script>
+</body>
+</html>
